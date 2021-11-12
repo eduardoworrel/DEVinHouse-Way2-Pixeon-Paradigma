@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  background-image: url('https://www.publicdomainpictures.net/pictures/60000/velka/hearts-background-wallpaper-orange.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+#container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.row {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+div {
+  height: 500px;
+  width: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 4px dashed purple;
+}

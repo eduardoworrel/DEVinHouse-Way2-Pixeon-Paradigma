@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        /*   margin:0; */
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .flex-container {
+        display: flex;
+        flex-flow: row-reverse wrap;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        gap: 20px 10px;
+        flex-wrap: wrap-reverse;
+      }
+
+      .flex-item {
+        background: tomato;
+        padding: 5px;
+        width: 200px;
+        height: 150px;
+        /*   margin-top: 10px; */
+        line-height: 150px;
+        color: white;
+        font-weight: bold;
+        font-size: 3em;
+        text-align: center;
+      }
+      button {
+        margin: 50px auto;
+        display: block;
+        width: 300px;
+        height: 50px;
+        border: none;
+        border-radius: 10px;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="flex-container">
+      <li class="flex-item">1</li>
+      <li class="flex-item">2</li>
+      <li class="flex-item">3</li>
+      <li class="flex-item">4</li>
+      <li class="flex-item">5</li>
+      <li class="flex-item">6</li>
+    </ul>
+    <button>inserir</button>
+  </body>
+  <script>
+    const btn = document.querySelector("button");
+    const ul = document.querySelector(".flex-container");
+    btn.addEventListener("click", () => {
+      let li = document.createElement("li");
+      li.classList.add("flex-item");
+      li.innerText = +ul.children[ul.children.length - 1].innerText + 1;
+      ul.appendChild(li);
+    });
+    console.log(btn);
+  </script>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .flex-container {
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: wrap-reverse;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            gap: 10px 30px;
+        }
+
+        .flex-item {
+            cursor: pointer;
+            background: tomato;
+            padding: 5px;
+            width: 200px;
+            height: 150px;
+            line-height: 150px;
+            color: white;
+            font-weight: bold;
+            font-size: 3em;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="text-align: center;">
+        <label>
+            <b>Cor dos itens</b><br>
+            <input id="corItens" type="color" onchange="mudaCorDosItens()">
+        </label>
+        <br>
+        <br>
+        <label>
+            <b>Justify-content</b><br>
+            <select id="possiveisJustificacoes" onchange="mudaJustificacao()">
+                <option value="flex-start">flex-start</option>
+                <option value="flex-end">flex-end</option>
+                <option value="center">center</option>
+                <option value="space-between">space-between</option>
+                <option value="space-around">space-around</option>
+                <option value="space-evenly">space-evenly</option>
+            </select>
+        </label>
+        <br>
+        <br>
+        <button onclick="adiciona()">Adicionar item</button>
+        <br>
+        <br>
+        <button onclick="inverte()">Inverter</button>
+        <br>
+        <br>
+    </div>
+    <ul class="flex-container">
+        <li class="flex-item">1</li>
+        <li class="flex-item">2</li>
+        <li class="flex-item">3</li>
+        <li class="flex-item">4</li>
+        <li class="flex-item">5</li>
+        <li class="flex-item">6</li>
+    </ul>
+</body>
+<script>
+    function salvaAtualizacoesNoLocalStorage(func) {
+
+        var container = document.querySelector(".flex-container");
+        var objetoASerSalvoNoStorage = {
+            itemsESuasCaracteristicas: [],
+            caracteristicasDoContainer: {
+                justificacao: getCSSProperty(container, "justify-content"),
+                direcao: getCSSProperty(container, "flex-direction"),
+                quebraLinha: getCSSProperty(container, "flex-wrap"),
+            }
+        };
+
+        var todosOsItes = document.querySelectorAll(".flex-item");
+        for (var item of todosOsItes) {
+            var jsonDasCaracteristicasDesseItem = {
+                ordemFlexivel: getCSSProperty(item, "order"),
+                corDeFundo: getCSSProperty(item, "background-color"),
+                conteudo: item.textContent
+            };
+            objetoASerSalvoNoStorage.itemsESuasCaracteristicas.push(jsonDasCaracteristicasDesseItem)
+        }
+        console.log(objetoASerSalvoNoStorage);
+        localStorage.setItem('dadosSalvos', JSON.stringify(objetoASerSalvoNoStorage));
+
+    }
+
+    var EstaInvertido = true; //CONSERTAR BUG
+
+    const filhos = document.querySelectorAll(".flex-item"); //itens
+    for (var filho of filhos) { //cada item
+
+        var color = document.createElement("input"); //cria input em cada item
+        color.type = "color"; //input tipo cor
+
+        //adiciona evento de mudança para cor
+        color.addEventListener("change", function (e) {
+            var EsseElemento = e.srcElement;
+            var PaiDele = EsseElemento.parentElement;
+            PaiDele.style.backgroundColor = EsseElemento.value;
+        });
+
+        //colocando o color no item
+        filho.appendChild(color);
+        var corSelecionada = document.getElementById("corItens").value;
+
+        //colocando evento click pra mudar cor
+        filho.addEventListener("click", function (e) {
+            alteraACorDoItem(e, corSelecionada);
+        });
+        //colocando evento double click para mudar ordem
+        filho.addEventListener("dblclick", function (e) {
+            alteraAOrdemDoItem(e);
+        });
+    }
+
+
+    if (localStorage.getItem('dadosSalvos')) {
+        var dados = JSON.parse(localStorage.getItem('dadosSalvos'));
+        document.getElementsByClassName("flex-container")[0].style.justifyContent = dados.caracteristicasDoContainer.justificacao;
+        document.getElementsByClassName("flex-container")[0].style.flexDirection = dados.caracteristicasDoContainer.direcao;
+        document.getElementsByClassName("flex-container")[0].style.flexWrap = dados.caracteristicasDoContainer.quebraLinha;
+
+        var quantidadeItensLocalStorage = dados.itemsESuasCaracteristicas.length;
+
+        //adicionando os itens que não vieram no html diretamente
+        var quantidadeDeItensHTML = document.getElementsByClassName("flex-item").length;
+        while (quantidadeDeItensHTML < quantidadeItensLocalStorage) {
+            var novoLI = document.createElement("li");
+            novoLI.classList.add("flex-item");
+            novoLI.textContent = dados.itemsESuasCaracteristicas[quantidadeDeItensHTML].conteudo;
+            var color = document.createElement("input");
+
+            color.addEventListener("change", function (e) {
+                var EsseElemento = e.srcElement;
+                var PaiDele = EsseElemento.parentElement;
+                PaiDele.style.backgroundColor = EsseElemento.value;
+            });
+            novoLI.appendChild(color);
+            color.type = "color";
+
+
+            novoLI.addEventListener("click", function (e) {
+                alteraACorDoItem(e, corSelecionada);
+            });
+
+
+            novoLI.addEventListener("dblclick", function (e) {
+                alteraAOrdemDoItem(e);
+            });
+
+            // inserir elemento
+            var itens = document.getElementsByClassName("flex-container")[0].appendChild(novoLI);
+
+            quantidadeDeItensHTML++;
+        }
+
+        for (var item = 0; item < quantidadeItensLocalStorage; item++) {
+            var ordemItem = dados.itemsESuasCaracteristicas[item].ordemFlexivel;
+            document.getElementsByClassName("flex-item")[item].style.order = ordemItem;
+
+            var corItem = dados.itemsESuasCaracteristicas[item].corDeFundo;
+            document.getElementsByClassName("flex-item")[item].style.backgroundColor = corItem;
+
+            var conteudoItem = dados.itemsESuasCaracteristicas[item].conteudo;
+            document.getElementsByClassName("flex-item")[item].style.innerText = conteudoItem;
+        }
+    }
+
+
+    function alteraAOrdemDoItem(e) {
+        var numeroEscolhidoPeloUsuario = window.prompt("Qual valor em ordem esse item deve ter?");
+        var elementoHtml = e.srcElement;
+        elementoHtml.style.order = numeroEscolhidoPeloUsuario;
+        salvaAtualizacoesNoLocalStorage();
+    }
+
+    function alteraACorDoItem(e, corSelecionada) {
+        var itemClicado = e.srcElement;
+
+        //console.log(window.getComputedStyle(itemClicado));
+
+        var corComputada = getCSSProperty(itemClicado, "background-color");
+        if (corComputada == "rgb(255, 99, 71)") {
+            itemClicado.style.backgroundColor = "black";
+        }
+        salvaAtualizacoesNoLocalStorage();
+    }
+
+    function mudaCorDosItens() {
+        //recupera cor escolhida
+        var corSelecionada = document.getElementById("corItens").value;
+        var itens = document.getElementsByClassName("flex-item");
+        for (var item of itens) {
+            item.style.background = corSelecionada;
+        }
+    }
+
+    function mudaJustificacao() {
+        var container = document.getElementsByClassName("flex-container")[0];
+
+        var justificacaoSelecionadaPeloUsuario = document.getElementById("possiveisJustificacoes").value;
+
+        document.getElementsByClassName("flex-container")[0].style.justifyContent = justificacaoSelecionadaPeloUsuario;
+        salvaAtualizacoesNoLocalStorage();
+    }
+
+    function inverte() {
+        var container = document.getElementsByClassName("flex-container")[0];
+
+        if (EstaInvertido) {
+            document.getElementsByClassName("flex-container")[0].style.flexDirection = "row";
+            document.getElementsByClassName("flex-container")[0].style.flexWrap = "wrap";
+            EstaInvertido = false;
+
+        } else {
+            document.getElementsByClassName("flex-container")[0].style.flexDirection = "row-reverse"
+            document.getElementsByClassName("flex-container")[0].style.flexWrap = "wrap-reverse"
+            EstaInvertido = true;
+        }
+        salvaAtualizacoesNoLocalStorage();
+    }
+
+    function adiciona() {
+        //criar elemento
+        var quantidadeDeItens = document.getElementsByClassName("flex-item").length;
+        var ultimoElemento = document.getElementsByClassName("flex-item")[quantidadeDeItens - 1];
+        var numero = +ultimoElemento.textContent + 1;
+
+        //criar a tag, preencher com valor
+        var novoLI = document.createElement("li");
+        novoLI.classList.add("flex-item");
+        novoLI.textContent = numero;
+
+        //injeto um input color
+        var color = document.createElement("input");
+        color.type = "color";
+
+        color.addEventListener("change", function (e) {
+            var EsseElemento = e.srcElement;
+            var PaiDele = EsseElemento.parentElement;
+            PaiDele.style.backgroundColor = EsseElemento.value;
+        });
+        novoLI.appendChild(color);
+
+        //adiciono os comportamentos esperados
+        novoLI.addEventListener("click", function (e) {
+            alteraACorDoItem(e, corSelecionada);
+        });
+
+
+        novoLI.addEventListener("dblclick", function (e) {
+            alteraAOrdemDoItem(e);
+        });
+
+        // inserir elemento
+        var itens = document.getElementsByClassName("flex-container")[0].appendChild(novoLI);
+        salvaAtualizacoesNoLocalStorage();
+    }
+
+
+    function getCSSProperty(elemento, propriedade) {
+        return window.getComputedStyle(elemento).getPropertyValue(propriedade);
+    }
+</script>
+
+</html>

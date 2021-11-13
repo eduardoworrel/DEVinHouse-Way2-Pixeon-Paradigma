@@ -1,0 +1,59 @@
+.flex-container {
+    /* We first create a flex layout context */
+    display: flex;
+    
+    /* Then we define the flow direction 
+       and if we allow the items to wrap 
+     * Remember this is the same as:
+     * flex-direction: row;
+     * flex-wrap: wrap;
+     */
+    flex-flow: row wrap;
+    
+    /* Then we define how is distributed the remaining space */
+    justify-content: center;
+    
+    padding: 0;
+    margin: 10px;
+    list-style: none;
+    
+    gap: 10px;
+  }
+  
+  .flex-item {
+    background-color: #ff6347;
+    padding: 5px;
+    width: 200px;
+    height: 150px;
+    
+    
+    color: white;
+    font-weight: bold;
+    font-size: 3em;
+    text-align: center;
+
+
+    order: 1;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-flow: column wrap;
+    column-gap: 10px;
+  }
+
+  .flex-item > input {
+    width: 25%;
+    height: 30px;
+    font-size: large;
+    text-align: center;
+  }
+
+  .btn-div {
+    padding: 10px;
+    border: 1px solid black;
+    font-size: large;
+    align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+  }

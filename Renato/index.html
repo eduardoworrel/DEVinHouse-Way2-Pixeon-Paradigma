@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .flex-container {
+        display: flex;
+        flex-flow: row-reverse wrap-reverse;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        gap: 10px 30px;
+      }
+
+      .flex-item {
+        background-color: tomato;
+        padding: 5px;
+        width: 200px;
+        height: 150px;
+        line-height: 150px;
+        color: white;
+        font-weight: bold;
+        font-size: 3em;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+      <h1 style="text-align: center;"><button onclick="adicionar()">Adicionar Item</button></h1>
+      <h1 style="text-align: center;"><button onclick="inverterOrdem()">Inverter Ordem</button></h1>
+      <h1 style="text-align: center;"><button onclick="alterarCor()">Alterar Cor</button></h1>
+      <input type="color" id="cor">
+      <select>
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+      </select>
+    <ul class="flex-container">
+      <li class="flex-item">1</li>
+      <li class="flex-item">2</li>
+      <li class="flex-item">3</li>
+      <li class="flex-item">4</li>
+      <li class="flex-item">5</li>
+      <li class="flex-item">6</li>
+    </ul>
+
+    <script>
+        function adicionar(){
+            //criar elemente
+            var quantidadeItens = document.getElementsByClassName("flex-item").length;
+            var ultimoElemento = document.getElementsByClassName("flex-item")[quantidadeItens - 1];
+            var numero = parseInt(ultimoElemento.textContent) + 1;
+            var novoItem = '<li class="flex-item">'+numero+'</li>';
+
+            //inserir
+            document.getElementsByClassName("flex-container")[0].innerHTML += novoItem;
+
+
+        }
+        var boolean = true;
+
+        function inverterOrdem(){
+            
+            console.log(boolean);
+            if(boolean){
+                document.getElementsByClassName("flex-container")[0].style.flexFlow = "row wrap";
+            } else{
+                document.getElementsByClassName("flex-container")[0].style.flexFlow = "row-reverse wrap-reverse";
+            }
+
+           boolean = !boolean;
+
+        }
+
+        function alterarCor(){
+            for(var i = 0; i < document.getElementsByClassName("flex-item").length; i++){
+                document.getElementsByClassName("flex-item")[i].style.backgroundColor = document.getElementById("cor").value;
+            }
+        }
+        
+    </script>
+  </body>
+</html>

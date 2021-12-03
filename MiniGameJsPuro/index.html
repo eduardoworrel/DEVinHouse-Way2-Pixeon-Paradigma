@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="index.js"></script>
+    <title>*~~Mini-Game~~*</title>
+    <style>
+        html,body{
+            padding: 0;
+            margin: 0;
+        }
+
+        #cenario{
+            display: flex;
+            flex-flow: row wrap;
+            height: 100vh;
+            background: rgb(0, 0, 0);
+            justify-items: center;
+            align-items: center;
+        }
+        .circuloCentralizado{
+            justify-items: center;
+            
+            border-radius: 50%;
+        }
+        #circuloMaximo{
+            margin: 0 auto;
+           display: flex;
+           flex-flow: row wrap;
+           box-shadow:0px 0px 0px 10px firebrick  inset;
+           width: 330px;
+            height: 330px;
+            align-items: center;
+        }
+        #circuloPrincipal{
+            margin: 0 auto;
+            width: 190px;
+            height: 190px;
+            background-color: rgb(255, 255, 255);
+            cursor: pointer;
+        }
+        #pontuacao h1,#pontuacao h2{
+            color: white;
+        }
+        #pontuacao{
+            position: fixed;
+            left:0;
+            width:200px;
+            height: 100vh;
+            background: black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main id="cenario">
+           
+            <div id="circuloMaximo" class="circuloCentralizado">
+                <div id="circuloPrincipal" class="circuloCentralizado">
+                  
+                </div>
+            </div>
+           <footer id="pontuacao">
+                <h1>Pontuação</h1>
+                <h2 id="ponto">0.0</h2>
+           </footer>
+    </main>
+</body>
+</html>

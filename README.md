@@ -1,7 +1,7 @@
 # AulasDEVinHouse
 Repositório de exercicios desenvolvidos durante a ministração de aulas  de Javascript para o SENAI de Santa Catarina.
 
- [Pages](https://eduardoworrel.github.io/AulasDEVinHouse/) 
+ [Git Page](https://eduardoworrel.github.io/AulasDEVinHouse/) or [Git Repo](https://github.com/eduardoworrel/AulasDEVinHouse/
 
  [Git e Github](https://eduardoworrel.github.io/AulasDEVinHouse/GitEGithub/) 
 

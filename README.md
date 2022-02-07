@@ -10,3 +10,5 @@ Repositório de exercicios desenvolvidos durante a ministração de aulas  de Ja
  [Manipula Dom e FlexBox](https://eduardoworrel.github.io/AulasDEVinHouse/ManipulaDomEFlexBox/) 
 
  [Manipula Retorno de API Assincrono](https://eduardoworrel.github.io/AulasDEVinHouse/ManipulaRetornoDeAPIAssincrono/) 
+
+[MiniGameJsPuro](https://eduardoworrel.github.io/AulasDEVinHouse/MiniGameJsPuro/) 
